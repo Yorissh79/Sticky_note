@@ -85,7 +85,6 @@ function createNote (id, color, text) {
     saveItem(unId, color, input_value.value)
 
     input_value.addEventListener("input", function () {
-
         
         saveItem(unId, color, input_value.value)
 
@@ -95,7 +94,6 @@ function createNote (id, color, text) {
 }
 
 function saveItem (id, color, text) {
-
     let lo_data = JSON.parse(localStorage.getItem("notes")) || []
     let x = 0
     for (item of lo_data) {
@@ -106,7 +104,6 @@ function saveItem (id, color, text) {
         }
         x++;
     }
-
 
     lo_data.push({
         "id" : `${id}`,
@@ -120,7 +117,16 @@ function saveItem (id, color, text) {
 
 function removeItem (who) {
 
-
+    let lo_data = JSON.parse(localStorage.getItem("notes"))
+    if (lo_data.length == 0) {
+        localStorage.removeItem("notes")
+        getIdNumber()
+    } else {
+        lo_data.splice(who, 1)
+        localStorage.setItem("notes", JSON.stringify(lo_data))
+        getIdNumber()
+    }
+    console.log(id)
 
 }
 
@@ -144,6 +150,7 @@ function getIdNumber () {
 
     if (data != null) {  
         id = Number(data[data.length -1].id) + 1
+        console.log(id)
     } else {
         id = 0
     }
